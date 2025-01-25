@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+    }
+    .feedback-form {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+    .feedback-form h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    .feedback-form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .feedback-form input, .feedback-form textarea, .feedback-form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .feedback-form button {
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .feedback-form button:hover {
+      background: #0056b3;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="feedback-form">
+    <h2>Feedback Form</h2>
+    <form id="feedbackForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      <span class="error" id="nameError"></span>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      <span class="error" id="emailError"></span>
+
+      <label for="feedback">Feedback</label>
+      <textarea id="feedback" name="feedback" rows="5" placeholder="Your feedback" required></textarea>
+      <span class="error" id="feedbackError"></span>
+
+      <button type="submit">Submit</button>
+    </form>
+    <p id="successMessage" style="color: green; display: none;">Thank you for your feedback!</p>
+  </div>
+
+  <script>
+    const feedbackForm = document.getElementById('feedbackForm');
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const feedbackError = document.getElementById('feedbackError');
+    const successMessage = document.getElementById('successMessage');
+
+    feedbackForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Reset error messages
+      nameError.textContent = '';
+      emailError.textContent = '';
+      feedbackError.textContent = '';
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const feedback = document.getElementById('feedback').value.trim();
+
+      let hasError = false;
+
+      // Validate name
+      if (name === '') {
+        nameError.textContent = 'Name is required.';
+        hasError = true;
+      }
+
+      // Validate email
+      if (email === '') {
+        emailError.textContent = 'Email is required.';
+        hasError = true;
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        emailError.textContent = 'Invalid email format.';
+        hasError = true;
+      }
+
+      // Validate feedback
+      if (feedback === '') {
+        feedbackError.textContent = 'Feedback is required.';
+        hasError = true;
+      }
+
+      // If no errors, show success message
+      if (!hasError) {
+        successMessage.style.display = 'block';
+        feedbackForm.reset();
+      }
+    });
+  </script>
+</body>
+</html>
